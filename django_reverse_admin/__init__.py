@@ -201,7 +201,8 @@ class ReverseModelAdmin(ModelAdmin):
             lambda inline: inline.has_view_or_change_permission(request, obj) or
             inline.has_add_permission(request, obj) or
             inline.has_delete_permission(request, obj), self.tmp_inline_instances))
-        return own + super(ReverseModelAdmin, self).get_inline_instances(request, obj)
+        return super(ReverseModelAdmin, self).get_inline_instances(request,
+                                                                   obj) + own
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         return self._changeform_view(request, object_id, form_url, extra_context)
