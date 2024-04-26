@@ -72,7 +72,9 @@ class Person(models.Model):
 ```py
 from django.contrib import admin
 from django.db import models
-from models import Person
+
+from .models import Person
+
 from django_reverse_admin import ReverseModelAdmin
 
 class PersonAdmin(ReverseModelAdmin):
@@ -84,6 +86,22 @@ admin.site.register(Person, PersonAdmin)
 ```
 
 inline_type can be either "tabular" or "stacked" for tabular and stacked inlines respectively.
+
+#### Custom Form
+
+To use custom ``Form``, simply add a form key along with the fields.
+```py
+from .forms import CustomBusinessAddrForm
+
+class PersonAdmin(ReverseModelAdmin):
+    inline_type = 'tabular'
+    inline_reverse = [
+        ('home_addr', {
+            'fields': ['street', 'city', 'state', 'zipcode'],
+            'form': CustomBusinessAddrForm
+        }),
+     ]
+```
 
 The module is designed to work with Django 2+ Since it hooks into the internals of the admin package, it may not work with later Django versions.
 
